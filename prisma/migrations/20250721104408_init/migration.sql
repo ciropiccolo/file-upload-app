@@ -8,7 +8,7 @@ CREATE TABLE "upload" (
     "provider" TEXT NOT NULL,
     "roles" TEXT[],
     "filename" TEXT NOT NULL,
-    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "createdat" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "upload_pkey" PRIMARY KEY ("id")
 );

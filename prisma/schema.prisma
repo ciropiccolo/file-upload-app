@@ -16,5 +16,5 @@ model upload {
   provider    String
   roles       String[]
   filename    String
-  createdAt   DateTime @default(now())
+  createdat   DateTime @default(now())
 }
