@@ -1,38 +1,52 @@
-# sv
+# File Upload App
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+A web application for uploading, managing, and viewing files, built with SvelteKit and PostgreSQL.
 
-## Creating a project
+## Features
 
-If you're seeing this, you've probably already done this step. Congrats!
+- Upload files with metadata (title, description, category, language, provider, roles)
+- Secure storage of files in `static/uploads`
+- List and search uploaded files
+- Backend powered by Prisma and PostgreSQL
 
-```bash
-# create a new project in the current directory
-npx sv create
+## Project Structure
 
-# create a new project in my-app
-npx sv create my-app
-```
+- `src/` - SvelteKit source code
+- `prisma/` - Database schema and migrations
+- `static/uploads/` - Uploaded files
+- `Dockerfile` and `docker-compose.yml` - Containerization setup
 
-## Developing
+## Getting Started with Docker Compose
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+1. **Clone the repository:**
+   ```sh
+   git clone https://github.com/your-username/file-upload-app.git
+   cd file-upload-app
+   ```
 
-```bash
-npm run dev
+2. **Start the application and database using Docker Compose:**
+   ```sh
+   docker-compose up --build
+   ```
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
+   This will:
+   - Start a PostgreSQL database container
+   - Build and start the SvelteKit app container
+   - Run Prisma migrations automatically
 
-## Building
+3. **Access the app:**
+   - Open [http://localhost:5173](http://localhost:5173) in your browser.
 
-To create a production version of your app:
+## Environment Variables
 
-```bash
-npm run build
-```
+The app uses a `.env` file for configuration. When running with Docker Compose, the database connection is set automatically.
 
-You can preview the production build with `npm run preview`.
+## Useful Commands
 
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+- **Stop the containers:**
+  ```sh
+  docker-compose down
+  ```
+- **View logs:**
+  ```sh
+  docker-compose logs app
