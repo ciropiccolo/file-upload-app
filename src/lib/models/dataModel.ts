@@ -7,5 +7,5 @@ export type DataModel = {
   provider: string;
   roles: string[];
   filename: string;
-  createdAt: string;
+  createdat: string;
 };
