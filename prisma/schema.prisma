@@ -7,7 +7,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Upload {
+model upload {
   id          Int      @id @default(autoincrement())
   title       String   @db.VarChar(200)
   description String   @db.VarChar(1000)

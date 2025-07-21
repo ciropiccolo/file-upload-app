@@ -1,5 +1,5 @@
 -- CreateTable
-CREATE TABLE "Upload" (
+CREATE TABLE "upload" (
     "id" SERIAL NOT NULL,
     "title" VARCHAR(200) NOT NULL,
     "description" VARCHAR(1000) NOT NULL,
@@ -10,5 +10,5 @@ CREATE TABLE "Upload" (
     "filename" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
-    CONSTRAINT "Upload_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "upload_pkey" PRIMARY KEY ("id")
 );
