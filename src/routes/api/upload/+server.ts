@@ -12,15 +12,27 @@ export const POST: RequestHandler = async ({ request }) => {
   const provider = data.get("provider") as string;
   const roles = JSON.parse(data.get("roles") as string);
   const file = data.get("file") as File;
-
+  console.log("files", file);
   const buffer = Buffer.from(await file.arrayBuffer());
+  console.log("buffer", buffer);
   const filename = `${Date.now()}_${file.name}`;
   const filepath = path.join("static/uploads", filename);
   fs.writeFileSync(filepath, buffer);
-
-  await prisma.upload.create({
-    data: { title, description, category, language, provider, roles, filename },
-  });
+  console.log("file scritto");
+  await prisma.upload
+    .create({
+      data: {
+        title,
+        description,
+        category,
+        language,
+        provider,
+        roles,
+        filename,
+      },
+    })
+    .then((x) => console.log("success", x))
+    .catch((e) => console.error("eerpre", e));
 
   return new Response(JSON.stringify({ success: true }));
 };
