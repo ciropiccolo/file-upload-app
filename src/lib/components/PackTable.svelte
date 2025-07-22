@@ -21,7 +21,8 @@
     <th class=" py-3" scope="col">Language</th>
     <th class=" py-3" scope="col">Provider</th>
     <th class="py-3" scope="col">Roles</th>
-    <th class=" py-3" scope="col">File</th>
+    <th class=" py-3" scope="col">File preview</th>
+    <th class=" py-3" scope="col">Download</th>
   </tr>
   </thead>
   <tbody>
@@ -43,14 +44,15 @@
               class="me-2 inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-green-600/20 ring-inset">{item}</span>
           {/each}
         </td>
-        <!--        <td><a href={`https://mypoccpack.s3.eu-central-1.amazonaws.com/${u.filename}`} target="_blank">View</a></td>-->
-        <td>
+        <td class="me-3">
           <button onclick={()=>{
-            console.log("èopoisa");
            view(u.filename)
           }}>View
           </button>
 
+        </td>
+        <td class="me-3">
+          <a href={`https://mypoccpack.s3.eu-central-1.amazonaws.com/${u.filename}`} target="_blank">Download</a>
         </td>
       </tr>
     {/each}
@@ -72,11 +74,11 @@
         {:else if mimeType.startsWith('video/')}
           <video controls class="w-full">
             <source src={filenameUrl} type={mimeType} />
-            Il tuo browser non supporta il video.
+            Your browsed does not support video
           </video>
         {:else}
           <a href={filenameUrl} target="_blank"
-             class="text-blue-600 underline">Apri file</a>
+             class="text-blue-600 underline">Open file</a>
         {/if}
         <button
           class="mt-3 pt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-xs  ring-gray-300 ring-inset hover:bg-gray-50 sm:mt-0 sm:w-auto"
