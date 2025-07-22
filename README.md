@@ -2,10 +2,14 @@
 
 A web application for uploading, managing, and viewing files, built with SvelteKit and PostgreSQL.
 
+## Requisites
+
+- Docker installed
+
 ## Features
 
 - Upload files with metadata (title, description, category, language, provider, roles)
-- Secure storage of files in `static/uploads`
+- Secure storage of files in AWS S3 , with local static folder as fallback
 - List and search uploaded files
 - Backend powered by Prisma and PostgreSQL
 
@@ -13,7 +17,7 @@ A web application for uploading, managing, and viewing files, built with SvelteK
 
 - `src/` - SvelteKit source code
 - `prisma/` - Database schema and migrations
-- `static/uploads/` - Uploaded files
+- `S3 client` - Uploaded files
 - `Dockerfile` and `docker-compose.yml` - Containerization setup
 
 ## Getting Started with Docker Compose
