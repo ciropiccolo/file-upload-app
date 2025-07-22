@@ -17,7 +17,7 @@
   <tbody>
   {#if uploads.length === 0}
     <tr>
-      <td colspan="6" class="text-center">No data</td>
+      <td class="text-center pt-5" colspan="6">No data avaiable</td>
     </tr>
   {:else}
     {#each uploads as u}
@@ -33,7 +33,7 @@
               class="me-2 inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-green-600/20 ring-inset">{item}</span>
           {/each}
         </td>
-        <td><a href={`/uploads/${u.filename}`} target="_blank">View</a></td>
+        <td><a href={`https://mypoccpack.s3.eu-central-1.amazonaws.com/${u.filename}`} target="_blank">View</a></td>
       </tr>
     {/each}
   {/if}

@@ -2,6 +2,8 @@ import { prisma } from "$lib/db";
 import type { RequestHandler } from "@sveltejs/kit";
 import fs from "fs";
 import path from "path";
+import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
+import { Buffer } from "buffer";
 
 export const POST: RequestHandler = async ({ request }) => {
   const data = await request.formData();
@@ -12,15 +14,36 @@ export const POST: RequestHandler = async ({ request }) => {
   const provider = data.get("provider") as string;
   const roles = JSON.parse(data.get("roles") as string);
   const file = data.get("file") as File;
-  console.log("files", file);
+
   const buffer = Buffer.from(await file.arrayBuffer());
-  console.log("buffer", buffer);
   const filename = `${Date.now()}_${file.name}`;
-  const filepath = path.join("static/uploads", filename);
-  fs.writeFileSync(filepath, buffer);
-  console.log("file scritto");
-  await prisma.upload
-    .create({
+
+  let uploadedToS3 = false;
+
+  try {
+    const s3 = new S3Client();
+
+    const command = new PutObjectCommand({
+      Bucket: "mypoccpack",
+      Key: filename,
+      Body: buffer,
+      ContentType: file.type,
+      ACL: "public-read",
+    });
+
+    const response = await s3.send(command);
+    console.log("Upload S3 riuscito:", response);
+    uploadedToS3 = true;
+  } catch (error) {
+    console.error("Errore upload S3, salvo in locale:", error);
+
+    const filepath = path.join("static/uploads", filename);
+    fs.writeFileSync(filepath, buffer);
+    console.log("File salvato localmente:", filepath);
+  }
+
+  try {
+    const result = await prisma.upload.create({
       data: {
         title,
         description,
@@ -30,9 +53,14 @@ export const POST: RequestHandler = async ({ request }) => {
         roles,
         filename,
       },
-    })
-    .then((x) => console.log("success", x))
-    .catch((e) => console.error("eerpre", e));
+    });
+    console.log("Record DB creato:", result);
+  } catch (e) {
+    console.error("Errore salvataggio DB:", e);
+    return new Response("Errore salvataggio DB", { status: 500 });
+  }
 
-  return new Response(JSON.stringify({ success: true }));
+  return new Response(JSON.stringify({ success: true, uploadedToS3 }), {
+    status: 200,
+  });
 };
